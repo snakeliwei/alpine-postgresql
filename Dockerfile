@@ -1,7 +1,7 @@
 FROM alpine
 
 RUN echo "@edge http://nl.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
-    apk add --no-cache --update curl tzdata postgresql@edge<9.6 && \
+    apk add --no-cache --update curl tzdata "postgresql@edge<9.6" && \
     mkdir /docker-entrypoint-initdb.d && \
     curl -o /usr/local/bin/gosu -sSL "https://github.com/tianon/gosu/releases/download/1.10/gosu-amd64" && \
     chmod +x /usr/local/bin/gosu && \
