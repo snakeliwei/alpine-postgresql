@@ -1,4 +1,4 @@
-FROM alpine:3.4
+FROM alpine:3.5
 
 RUN apk add --no-cache --update curl tzdata postgresql && \
     mkdir /docker-entrypoint-initdb.d && \
@@ -8,7 +8,7 @@ RUN apk add --no-cache --update curl tzdata postgresql && \
     apk del curl tzdata && \
     rm -rf /var/cache/apk/*
 
-ENV LANG en_US.utf8
+ENV LANG C.UTF-8
 ENV PGDATA /var/lib/postgresql/data
 VOLUME /var/lib/postgresql/data
 
