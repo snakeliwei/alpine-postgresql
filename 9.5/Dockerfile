@@ -1,4 +1,5 @@
 FROM alpine:3.4
+MAINTAINER lyndon <snakeliwei@gmail.com>
 
 RUN apk add --no-cache --update 'su-exec>=0.2' tzdata postgresql && \
     mkdir /docker-entrypoint-initdb.d && \
