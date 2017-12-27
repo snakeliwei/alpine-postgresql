@@ -1,5 +1,11 @@
-#!/bin/sh
+#!/usr/bin/env sh
+# Author : lyndon
+# Date : 2017.09.22
+
+#Fix folder permission
 chown -R postgres "$PGDATA"
+chown -R postgres /run/postgresql/
+
 
 if [ -z "$(ls -A "$PGDATA")" ]; then
     su-exec postgres initdb
