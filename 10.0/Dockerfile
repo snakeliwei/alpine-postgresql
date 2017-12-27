@@ -3,6 +3,7 @@ MAINTAINER lyndon <snakeliwei@gmail.com>
 
 RUN apk add --no-cache --update 'su-exec>=0.2' tzdata postgresql && \
     mkdir /docker-entrypoint-initdb.d && \
+    mkdir -p /run/postgresql/ && \
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     rm -rf /var/cache/apk/*
 
