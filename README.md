@@ -1,2 +1,2 @@
 # alpine-postgresql
-> add 9.5 and 9.6 version for usefull
+> Install postgresl on alpine linux whith startup script
