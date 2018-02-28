@@ -1,5 +1,5 @@
 FROM alpine:edge
-MAINTAINER lyndon <snakeliwei@gmail.com>
+LABEL maintainer="lyndon <snakeliwei@gmail.com>"
 
 RUN apk add --no-cache --update 'su-exec>=0.2' tzdata postgresql && \
     mkdir /docker-entrypoint-initdb.d && \
