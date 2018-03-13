@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM alpine
 LABEL maintainer="lyndon <snakeliwei@gmail.com>"
 
 RUN apk add --no-cache --update 'su-exec>=0.2' tzdata postgresql && \
