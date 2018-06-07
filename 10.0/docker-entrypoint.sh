@@ -6,7 +6,6 @@
 chown -R postgres "$PGDATA"
 chown -R postgres /run/postgresql/
 
-
 if [ -z "$(ls -A "$PGDATA")" ]; then
     su-exec postgres initdb
     sed -ri "s/^#(listen_addresses\s*=\s*)\S+/\1'*'/" "$PGDATA"/postgresql.conf
