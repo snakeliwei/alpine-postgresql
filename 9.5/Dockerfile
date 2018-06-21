@@ -1,7 +1,7 @@
 FROM alpine:3.4
-MAINTAINER lyndon <snakeliwei@gmail.com>
+LABEL maintainer="lyndon <snakeliwei@gmail.com>"
 
-RUN apk add --no-cache --update 'su-exec>=0.2' tzdata postgresql && \
+RUN apk add --no-cache --update 'su-exec>=0.2' tzdata postgresql postgresql-contrib && \
     mkdir /docker-entrypoint-initdb.d && \
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     rm -rf /var/cache/apk/*
