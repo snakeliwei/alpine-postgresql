@@ -2,12 +2,13 @@
 # Author : lyndon
 # Date : 2017.09.22
 
-# #Fix folder permission
-# chown -R postgres "$PGDATA"
-# chown -R postgres /run/postgresql/
+#Fix folder permission
+chown -R postgres "$PGDATA"
+chmod -R 777 "$PGDATA"
+chown -R postgres /run/postgresql/
 
 if [ -z "$(ls -A "$PGDATA")" ]; then
-     initdb
+    su-exec postgres initdb
     sed -ri "s/^#(listen_addresses\s*=\s*)\S+/\1'*'/" "$PGDATA"/postgresql.conf
 
     : ${POSTGRES_USER:="postgres"}
@@ -28,7 +29,7 @@ if [ -z "$(ls -A "$PGDATA")" ]; then
 
     if [ "$POSTGRES_DB" != 'postgres' ]; then
       createSql="CREATE DATABASE $POSTGRES_DB;"
-      echo $createSql |  postgres --single -jE
+      echo $createSql | su-exec postgres postgres --single -jE
       echo
     fi
 
@@ -39,12 +40,12 @@ if [ -z "$(ls -A "$PGDATA")" ]; then
     fi
 
     userSql="$op USER $POSTGRES_USER WITH SUPERUSER $pass;"
-    echo $userSql |  postgres --single -jE
+    echo $userSql | su-exec postgres postgres --single -jE
     echo
 
     # internal start of server in order to allow set-up using psql-client
     # does not listen on TCP/IP and waits until start finishes
-     pg_ctl -D "$PGDATA" \
+    su-exec postgres pg_ctl -D "$PGDATA" \
         -o "-c listen_addresses=''" \
         -w start
 
@@ -58,9 +59,9 @@ if [ -z "$(ls -A "$PGDATA")" ]; then
         echo
     done
 
-     pg_ctl -D "$PGDATA" -m fast -w stop
+    su-exec postgres pg_ctl -D "$PGDATA" -m fast -w stop
 
     { echo; echo "host all all 0.0.0.0/0 $authMethod"; } >> "$PGDATA"/pg_hba.conf
 fi
 
-exec  "$@"
+exec su-exec postgres "$@"
