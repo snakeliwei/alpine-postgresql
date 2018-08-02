@@ -1,8 +1,8 @@
 FROM alpine:3.8
 LABEL maintainer="lyndon <snakeliwei@gmail.com>"
 
-RUN addgroup -g 2000 -S postgres && \
-    adduser -u 2000 -S -G postgres postgres && \
+RUN sed -i 's/postgres:x:70:/postgres:x:2000:/g' /etc/group && \
+    sed -i 's/postgres:x:70:70/postgres:x:2000:2000/g' /etc/passwd && \
     apk add --no-cache --update 'su-exec>=0.2' tzdata postgresql postgresql-contrib && \
     mkdir /docker-entrypoint-initdb.d && \
     mkdir -p /run/postgresql/ && \
