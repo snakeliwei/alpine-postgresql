@@ -1,7 +1,9 @@
-FROM alpine:3.7
+FROM alpine:3.8
 LABEL maintainer="lyndon <snakeliwei@gmail.com>"
 
-RUN apk add --no-cache --update 'su-exec>=0.2' tzdata postgresql postgresql-contrib && \
+RUN addgroup -g 2000 -S postgres && \
+    adduser -u 2000 -S -G postgres postgres && \
+    apk add --no-cache --update 'su-exec>=0.2' tzdata postgresql postgresql-contrib && \
     mkdir /docker-entrypoint-initdb.d && \
     mkdir -p /run/postgresql/ && \
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
